@@ -1,0 +1,32 @@
+# Dependencies and build output
+**/node_modules/
+**/dist/
+**/build/
+.cache/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+**/config/config.json
+*.ovpn
+privateKey_*.txt
+ssA_*.txt
+
+# Runtime files
+**/log/*.log
+**/temp/
+*.zip
+
+# IDE and operating system files
+.idea/
+**/.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Third-party SDK checkout
+emsdk/
+
+# Preserved history from the former nested frontend repository
+**/.git.frontend-backup/

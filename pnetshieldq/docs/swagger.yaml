@@ -1,0 +1,226 @@
+definitions:
+  controller.MessageRequest:
+    properties:
+      id:
+        type: integer
+      isHistorical:
+        type: boolean
+      receiverId:
+        type: integer
+      senderId:
+        type: integer
+      text:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  entity.File:
+    properties:
+      fileID:
+        type: integer
+      fileName:
+        type: string
+      fileType:
+        type: string
+      fileURL:
+        type: string
+      receiverID:
+        type: string
+      senderID:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  entity.Message:
+    properties:
+      content:
+        type: string
+      filename:
+        type: string
+      message_id:
+        type: integer
+      message_type:
+        type: string
+      receiver_id:
+        type: integer
+      sender_id:
+        type: integer
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      clientID:
+        type: string
+      email:
+        type: string
+      ip:
+        type: string
+      lastSeen:
+        type: string
+      onlineStatus:
+        type: boolean
+      password:
+        type: string
+      userID:
+        type: integer
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  version: "2.0"
+paths:
+  /file/delete:
+    get:
+      description: Delete a file from the server
+      parameters:
+      - description: The name of the file to delete
+        in: query
+        name: fileName
+        required: true
+        type: string
+      responses:
+        "200":
+          description: File deleted successfully
+          schema:
+            type: string
+      summary: Delete a file
+  /file/download:
+    get:
+      description: Download a file by ID
+      parameters:
+      - description: The ID of the file to download
+        in: query
+        name: fileID
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: File downloaded successfully
+        "404":
+          description: File not found
+        "500":
+          description: Internal server error
+      summary: Download a file
+  /file/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a file to the server
+      parameters:
+      - description: The file to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File uploaded successfully
+          schema:
+            type: string
+      summary: Upload a file
+  /file/userfiles:
+    get:
+      consumes:
+      - application/json
+      description: Get all files related to the current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.File'
+            type: array
+      summary: Get user's files
+  /message/history/{userID}/{friendID}:
+    get:
+      consumes:
+      - application/json
+      description: Get all messages between two users
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      - description: Friend ID
+        in: path
+        name: friendID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+      summary: Get historical messages between two users
+  /message/send:
+    post:
+      consumes:
+      - application/json
+      description: Send a message to a user
+      parameters:
+      - description: Message request
+        in: body
+        name: messageRequest
+        required: true
+        schema:
+          $ref: '#/definitions/controller.MessageRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.Message'
+      summary: Send a message
+  /users/{id}:
+    delete:
+      description: delete user by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            type: string
+      summary: Delete User
+    put:
+      description: update user by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entity.User'
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            type: string
+      summary: Update User
+swagger: "2.0"

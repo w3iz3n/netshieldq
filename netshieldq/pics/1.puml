@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+
+participant "A" as A
+participant "B" as B
+
+== UAKE 密钥交换 ==
+A -> A : kex_uake_initA()\n生成 A 的密钥对\n用 B 的公钥加密临时密钥
+A -> B : 发送 A 的公钥和加密的临时密钥
+B -> B : kex_uake_sharedB()\n解密临时密钥\n生成共享密钥
+B -> A : 发送加密的密钥数据
+A -> A : kex_uake_sharedA()\n解密密钥数据\n派生最终的共享密钥
+
+== AKE 密钥交换 ==
+A -> A : kex_ake_initA()\n生成 A 的密钥对\n用 B 的公钥加密临时密钥
+A -> B : 发送 A 的公钥和加密的临时密钥
+B -> B : kex_ake_sharedB()\n执行双重加密\n用 B 的私钥解密
+B -> A : 发送双重加密的密钥数据
+A -> A : kex_ake_sharedA()\n解密接收到的数据\n派生最终的共享密钥
+
+@enduml

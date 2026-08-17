@@ -1,0 +1,22 @@
+{
+  "broker_ip": "localhost",
+  "broker_port": "1883",
+  "db_user": "root",
+  "db_password": "YOUR_DB_PASSWORD",
+  "mqtt_user_table": "mqtt_user",
+  "mqtt_acl_table": "mqtt_acl",
+  "db_host": "localhost",
+  "db_port": "3306",
+  "db_name": "netshieldq",
+  "emqx_ip": "localhost",
+  "emqx_management_port": "18083",
+  "emqx_api_port": "8081",
+  "emqx_management_api_key": "YOUR_EMQX_API_KEY",
+  "acl_name": "YOUR_MQTT_USERNAME",
+  "acl_password": "YOUR_MQTT_PASSWORD",
+  "oss_access_key_id": "YOUR_OSS_ACCESS_KEY_ID",
+  "oss_access_key_secret": "YOUR_OSS_ACCESS_KEY_SECRET",
+  "oss_bucket_name": "YOUR_OSS_BUCKET_NAME",
+  "oss_endpoint": "oss-cn-hangzhou.aliyuncs.com",
+  "oss_region": "oss-cn-hangzhou"
+}
